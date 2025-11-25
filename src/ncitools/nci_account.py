@@ -1,6 +1,8 @@
 import os
+from datetime import datetime
 from typing import TypedDict
 
+import pandas
 import pymunge
 import requests
 
@@ -74,3 +76,50 @@ def nci_account(project: str | None = None) -> nci_account_result:
     r.raise_for_status()
 
     return r.json()
+
+
+def process_nci_account(
+    results: list[nci_account_result], timestamp: datetime | None = None
+) -> dict[str, pandas.DataFrame]:
+    """
+    Prepare nci_account outputs for CSV output
+    """
+    compute = []
+    storage = []
+
+    if timestamp is None:
+        timestamp = datetime.now()
+
+    for result in results:
+        for user, cusage in result["usage"]["users"].items():
+            compute.append(
+                {
+                    "timestamp": timestamp.isoformat(timespec="minutes"),
+                    "project": result["project"],
+                    "user": user,
+                    **cusage,
+                }
+            )
+
+        for system, susage in result["storage"].items():
+            try:
+                storage.append(
+                    {
+                        "timestamp": timestamp.isoformat(timespec="minutes"),
+                        "project": result["project"],
+                        "block_usage": susage["block_usage"],
+                        "inode_usage": susage["inode_usage"],
+                        "block_allocation": sum(
+                            a.get("block_allocation", 0)
+                            for a in susage.get("allocations", {})
+                        ),
+                        "inode_allocation": sum(
+                            a.get("inode_allocation", 0)
+                            for a in susage.get("allocations", {})
+                        ),
+                    }
+                )
+            except Exception:
+                print(system, susage)
+
+    return {"compute": pandas.DataFrame(compute), "storage": pandas.DataFrame(storage)}
