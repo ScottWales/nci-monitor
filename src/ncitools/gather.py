@@ -60,8 +60,8 @@ def gather_schemes(output: Path, timestamp: datetime, schemes: list[str]):
 def gather_projects(output: Path, schemes: list[str]) -> set[str]:
     projects: set[str] = set()
     for s in schemes:
-        projects.update(pandas.read_csv(output / f"scheme-compute.{s}.csv")["Project"].unique())
-        projects.update(pandas.read_csv(output / f"scheme-storage.{s}.csv")["Project"].unique())
+        projects.update(pandas.read_csv(output / f"scheme-compute.{s}.csv")["Project Code"].unique())
+        projects.update(pandas.read_csv(output / f"scheme-storage.{s}.csv")["Project Code"].unique())
     return projects
 
 
