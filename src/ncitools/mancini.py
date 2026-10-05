@@ -30,7 +30,7 @@ def mancini_session() -> Generator[requests.Session]:
         form["password"] = os.environ["SCHEME_PASS"]
         headers = {"Referer": "https://my.nci.org.au/mancini/login"}
 
-        r = s.post("https://my.nci.org.au/mancini/login", data=form, headers=headers)
+        r = s.post("https://my.nci.org.au/mancini/login", data=form, headers=headers, timeout=5)
         r.raise_for_status()
 
         yield s
@@ -43,7 +43,7 @@ def scheme_compute(s: requests.Session, scheme: str) -> pandas.DataFrame:
     Returns:
         DataFrame with columns ["Project Code", "Current Lead CI(s)", "Scheme", "Period", "Amount Allocated (kSU)", "Amount Used (kSU)", "Percentage Used (%)"]
     """
-    r = s.get(f"https://my.nci.org.au/mancini/scheme/{scheme}/compute/csv", timeout=10)
+    r = s.get(f"https://my.nci.org.au/mancini/scheme/{scheme}/compute/csv", timeout=5)
     r.raise_for_status()
 
     return pandas.read_csv(StringIO(r.text))
@@ -56,7 +56,7 @@ def scheme_storage(s: requests.Session, scheme: str) -> pandas.DataFrame:
     Returns:
         DataFrame with columns ["Project Code", "Current Lead CI(s)", "Scheme", "Period", "Amount Allocated (KiB)", "Amount Used (KiB)", "Percentage Used (%)"]
     """
-    r = s.get(f"https://my.nci.org.au/mancini/scheme/{scheme}/storage/csv", timeout=10)
+    r = s.get(f"https://my.nci.org.au/mancini/scheme/{scheme}/storage/csv", timeout=5)
     r.raise_for_status()
 
     return pandas.read_csv(StringIO(r.text), comment="#", skiprows=3)
