@@ -37,7 +37,7 @@ def test_scheme_compute(session: requests.Session):
 def test_scheme_storage(session: requests.Session):
     with patch("requests.Session.get") as mock_get:
         mock_get.return_value.raise_for_status = lambda: None
-        mock_get.return_value.text = "#\n#\n#\nProject Code,Current Lead CI(s),Scheme,Period,Amount Allocated (KiB),Amount Used (KiB),Percentage Used (%)\nP1,CI1,Scheme1,2024.q1,100,50,50"
+        mock_get.return_value.text = "#\n\"# 1. Amount Used is the final usage at the end of the period for past periods, and the current usage for the current period.\"\n#\nProject Code,Current Lead CI(s),Scheme,Period,Amount Allocated (KiB),Amount Used (KiB),Percentage Used (%)\nP1,CI1,Scheme1,2024.q1,100,50,50"
         df = scheme_storage(session, "bom")
         assert not df.empty
         assert all(

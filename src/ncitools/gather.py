@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import pwd
 import grp
+import logging
 
 import pandas
 
@@ -15,6 +16,7 @@ from ncitools.nci_account import nci_account, process_nci_account, nci_account_r
 
 from .mancini import mancini_session, scheme_compute, scheme_storage
 
+log = logging.getLogger(__name__)
 
 def atomic_append(path: Path|str, df: pandas.DataFrame):
     """
@@ -41,6 +43,7 @@ def gather_schemes(output: Path, timestamp: datetime, schemes: list[str]):
         for s in schemes:
             current_quarter = f"{timestamp.year}.q{((timestamp.month - 1) // 3) + 1}"
 
+            log.info("Mancini %s", s)
             compute = scheme_compute(session, s)
             storage = scheme_storage(session, s)
 
@@ -90,6 +93,7 @@ def getgrouplist(user: str) -> list[str]:
 def gather_project_info(output: Path, timestamp: datetime, projects: list[str]):
     results: list[nci_account_result] = []
     for p in projects:
+        log.info("nci_account -P %s", p)
         results.append(nci_account(p))
     r = process_nci_account(results, timestamp)
     atomic_append(output / "nci_account.compute.csv", r["compute"])
@@ -99,6 +103,7 @@ def gather_project_info(output: Path, timestamp: datetime, projects: list[str]):
 def gather_storage_info(output: Path, timestamp: datetime, projects: list[str]):
     results: list[dict[str, str|float]] = []
     for p in projects:
+        log.info("lquota -P %s", p)
         results.extend(lquota(p))
     df = pandas.DataFrame(results)
     df['timestamp'] = timestamp.isoformat(timespec="minutes")
