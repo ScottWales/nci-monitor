@@ -127,7 +127,7 @@ def gather(output: Path|str):
     projects = gather_projects(output, schemes)
 
     # Gather project membership
-    gather_membership(output, timestamp, projects)
+    # gather_membership(output, timestamp, projects)
 
     # Gather projects we can get more info on
     my_projects = set(getgrouplist(os.getlogin()))
