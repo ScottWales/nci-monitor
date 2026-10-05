@@ -1,7 +1,5 @@
-import os
-import grp
-import pwd
 import getpass
+import pwd
 from unittest.mock import patch
 
 from ..users import project_members

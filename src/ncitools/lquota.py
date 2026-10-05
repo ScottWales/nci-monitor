@@ -17,14 +17,14 @@ def lquota(project: str) -> list[dict]:
                 r["fs"] = str(fs)
                 if r["block_hard_limit"] > 0:
                     result.append(r)
-            except Exception:
+            except OSError:
                 result.append({"fs": str(fs), "group": project})
             try:
                 r = lfs.get_project_quota(project)
                 r["fs"] = str(fs)
                 if r["block_hard_limit"] > 0:
                     result.append(r)
-            except Exception:
+            except OSError:
                 result.append({"fs": str(fs), "project": project})
 
     return result

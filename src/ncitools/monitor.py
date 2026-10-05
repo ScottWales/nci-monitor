@@ -1,4 +1,5 @@
 import pandas
+
 from .mancini import mancini_session, scheme_compute, scheme_storage
 
 
@@ -14,5 +15,6 @@ def monitor_scheme():
     projects += set(records["scheme_storage"]["project"].unique())
 
     print(projects)
+
 
 monitor_scheme()

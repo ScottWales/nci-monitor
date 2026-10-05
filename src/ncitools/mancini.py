@@ -1,7 +1,7 @@
+import os
+from collections.abc import Generator
 from contextlib import contextmanager
 from io import StringIO
-from typing import Generator
-import os
 
 import pandas
 import requests

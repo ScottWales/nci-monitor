@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import TypedDict
 
 import pandas
@@ -88,7 +88,7 @@ def process_nci_account(
     storage = []
 
     if timestamp is None:
-        timestamp = datetime.now()
+        timestamp = datetime.now(tz=timezone.utc)
 
     for result in results:
         for user, cusage in result["usage"]["users"].items():
@@ -119,7 +119,7 @@ def process_nci_account(
                         ),
                     }
                 )
-            except Exception:
+            except AttributeError:
                 print(system, susage)
 
     return {"compute": pandas.DataFrame(compute), "storage": pandas.DataFrame(storage)}

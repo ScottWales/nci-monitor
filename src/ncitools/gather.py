@@ -14,4 +14,3 @@ def gather():
             compute = scheme_compute(session, s)
             storage = scheme_storage(session, s)
 
-    pass

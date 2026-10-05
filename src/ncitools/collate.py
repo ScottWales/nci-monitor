@@ -1,6 +1,7 @@
 import grp
 import os
-from datetime import datetime
+from datetime import datetime, timezone
+
 import pandas
 
 from .nci_account import nci_account, process_nci_account
@@ -21,7 +22,7 @@ def collate_nci_account(
     projects: list[str] | None = None, timestamp: datetime | None = None
 ) -> dict[str, pandas.DataFrame]:
     if timestamp is None:
-        timestamp = datetime.now()
+        timestamp = datetime.now(tz=timezone.utc)
     if projects is None:
         projects = all_projects()
 
