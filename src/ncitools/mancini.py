@@ -30,7 +30,9 @@ def mancini_session() -> Generator[requests.Session]:
         form["password"] = os.environ["SCHEME_PASS"]
         headers = {"Referer": "https://my.nci.org.au/mancini/login"}
 
-        r = s.post("https://my.nci.org.au/mancini/login", data=form, headers=headers, timeout=5)
+        r = s.post(
+            "https://my.nci.org.au/mancini/login", data=form, headers=headers, timeout=5
+        )
         r.raise_for_status()
 
         yield s

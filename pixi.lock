@@ -71,6 +71,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.8.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_7.conda
+      - pypi: https://files.pythonhosted.org/packages/1c/e3/6b80fc711c66e7beb4dd3753ffefa6fb5a23bb7df56e03fbbe2d0669b85c/pymunge-0.1.3-py2.py3-none-any.whl
       - pypi: ./
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
@@ -534,7 +535,9 @@ packages:
 - pypi: ./
   name: nci-tools
   version: '0.1'
-  sha256: 70b70a00ec3178d1a9b638f6c7a88308d1fc9b40cf0e4bbad1a0a6dce188a1f0
+  sha256: 8606af7a2c25a81c6b6198a4ba36a50dc943efcc0118687b9e0fb4544af1368f
+  requires_dist:
+  - pymunge>=0.1.3,<0.2
 - conda: https://conda.anaconda.org/conda-forge/linux-64/ncurses-6.6-hdb14827_1.conda
   sha256: 5d46557214ed184381dafe835b7c94a474a1c3b307a08a250b1ea4779b44ffb3
   md5: ee6c0cd80a60961a1f48aa3e0b91f986
@@ -670,6 +673,10 @@ packages:
   - pkg:pypi/pygments?source=compressed-mapping
   size: 959376
   timestamp: 1786995678795
+- pypi: https://files.pythonhosted.org/packages/1c/e3/6b80fc711c66e7beb4dd3753ffefa6fb5a23bb7df56e03fbbe2d0669b85c/pymunge-0.1.3-py2.py3-none-any.whl
+  name: pymunge
+  version: 0.1.3
+  sha256: ed2d30636bd2763202f3aeaed055b77f117b921832e21858e0f68f829129cf15
 - conda: https://conda.anaconda.org/conda-forge/noarch/pysocks-1.7.1-pyha55dd90_7.conda
   sha256: ba3b032fa52709ce0d9fd388f63d330a026754587a2f461117cac9ab73d8d0d8
   md5: 461219d1a5bd61342293efa2c0c90eac

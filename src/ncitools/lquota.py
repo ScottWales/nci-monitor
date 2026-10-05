@@ -5,7 +5,7 @@ sys.path.append("/opt/nci/lquota")
 from lustre import LustreFilesystem
 
 
-def lquota(project: str) -> list[dict[str, str|int]]:
+def lquota(project: str) -> list[dict[str, str | int]]:
     result = []
 
     for fs in [Path("/scratch"), Path("/g/data")]:
@@ -13,14 +13,14 @@ def lquota(project: str) -> list[dict[str, str|int]]:
 
         if (fs / project).is_dir():
             try:
-                r: dict[str, str|int] = lfs.get_group_quota(project)
+                r: dict[str, str | int] = lfs.get_group_quota(project)
                 r["fs"] = str(fs)
                 if r["block_hard_limit"] > 0:
                     result.append(r)
             except OSError:
                 result.append({"fs": str(fs), "group": project})
             try:
-                r: dict[str, str|int] = lfs.get_project_quota(project)
+                r: dict[str, str | int] = lfs.get_project_quota(project)
                 r["fs"] = str(fs)
                 if r["block_hard_limit"] > 0:
                     result.append(r)
