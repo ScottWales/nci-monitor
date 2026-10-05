@@ -59,4 +59,4 @@ def scheme_storage(s: requests.Session, scheme: str) -> pandas.DataFrame:
     r = s.get(f"https://my.nci.org.au/mancini/scheme/{scheme}/storage/csv", timeout=10)
     r.raise_for_status()
 
-    return pandas.read_csv(StringIO(r.text), comment="#")
+    return pandas.read_csv(StringIO(r.text), comment="#", skiprows=3)
