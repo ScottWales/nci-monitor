@@ -13,7 +13,7 @@ def mancini_session() -> Generator[requests.Session]:
     with requests.Session() as s:
         s.headers["Origin"] = "https://my.nci.org.au"
 
-        r = s.get("https://my.nci.org.au/mancini/login")
+        r = s.get("https://my.nci.org.au/mancini/login", timeout=5)
         r.raise_for_status()
 
         # Collect xsrf tokens required to log in
