@@ -11,3 +11,19 @@ description = "Tools for working with NCI accounting"
 [[tool.mypy.overrides]]
 module = ["lustre.*", "pymunge.*"]
 ignore_missing_imports = true
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+nci-tools = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+
+[tool.pixi.dependencies]
+pytest = ">=9.1.1,<10"
+pandas = ">=3.0.6,<4"
+requests = ">=2.34.2,<3"
+bs4 = ">=4.15.0,<5"
+ruff = ">=0.16.10,<0.17"
