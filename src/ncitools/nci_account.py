@@ -107,6 +107,7 @@ def process_nci_account(
                     {
                         "timestamp": timestamp.isoformat(timespec="minutes"),
                         "project": result["project"],
+                        "system": system,
                         "block_usage": susage["block_usage"],
                         "inode_usage": susage["inode_usage"],
                         "block_allocation": sum(
