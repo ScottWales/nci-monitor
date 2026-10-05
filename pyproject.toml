@@ -7,6 +7,7 @@ name = "nci-tools"
 version = "0.1"
 readme = "README.md"
 description = "Tools for working with NCI accounting"
+dependencies = ["pymunge>=0.1.3,<0.2"]
 
 [[tool.mypy.overrides]]
 module = ["lustre.*", "pymunge.*"]
