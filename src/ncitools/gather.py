@@ -55,18 +55,18 @@ def gather_schemes(output: Path, timestamp: datetime, schemes: list[str]):
             compute["timestamp"] = timestamp.isoformat(timespec="minutes")
             storage["timestamp"] = timestamp.isoformat(timespec="minutes")
 
-            atomic_append(output / f"scheme-compute.{s}.csv", compute)
-            atomic_append(output / f"scheme-storage.{s}.csv", storage)
+            atomic_append(output / f"scheme-compute.csv", compute)
+            atomic_append(output / f"scheme-storage.csv", storage)
 
 
 def gather_projects(output: Path, schemes: list[str]) -> set[str]:
     projects: set[str] = set()
     for s in schemes:
         projects.update(
-            pandas.read_csv(output / f"scheme-compute.{s}.csv")["Project Code"].unique()
+            pandas.read_csv(output / f"scheme-compute.csv")["Project Code"].unique()
         )
         projects.update(
-            pandas.read_csv(output / f"scheme-storage.{s}.csv")["Project Code"].unique()
+            pandas.read_csv(output / f"scheme-storage.csv")["Project Code"].unique()
         )
     return projects
 
